@@ -79,6 +79,9 @@ public class AdminView extends JFrame {
     public void addUserTotalListener(ActionListener addUserTotal) {
         showUserTotalButton.addActionListener(addUserTotal);
     }
+    public void addTotalMessageListener(ActionListener addTotalMessage) {
+        showMessageTotalButton.addActionListener(addTotalMessage);
+    }
     public void addGroupTotalListener(ActionListener addGroupTotal) {
         showGroupTotalButton.addActionListener(addGroupTotal);
     }

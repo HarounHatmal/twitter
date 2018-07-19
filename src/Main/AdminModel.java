@@ -15,6 +15,7 @@ import java.util.TreeMap;
  */
 public class AdminModel {
     private TreeMap<UserGroup, UserGroup> map;  
+    private List<UserModel> userList;
     private int totalUser;
     private int totalGroup;
     
@@ -27,8 +28,14 @@ public class AdminModel {
     public TreeMap<UserGroup, UserGroup> getMap() {
         return map;
     }
+    public List<UserModel> getUserList() {
+        return userList;
+    }
     //  add user to a group
     public void addUser(String id, UserGroup group) {
+        if(userList == null)
+            userList = new ArrayList();
+        userList.add(new UserModel(id));
         group.addUser(id);
     }
     public void addGroup(String k, String v) {
@@ -41,6 +48,12 @@ public class AdminModel {
     }
     public int getTotalUser() {
         return totalUser;
+    }
+    public int getTotalMessage() {
+        // static variable
+        if(userList != null)
+            return userList.get(0).getTweetCount();
+        return 0;
     }
     public void incrementTotalUser() {
         totalUser++;

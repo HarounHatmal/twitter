@@ -7,6 +7,7 @@ package Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
@@ -14,6 +15,7 @@ public class AdminController {
     private AdminView adminView;
     private AdminModel adminModel;
     TreeController tc;
+    
     public AdminController(AdminView av, AdminModel am) {
         adminView = av;
         adminModel = am;
@@ -22,6 +24,7 @@ public class AdminController {
         adminView.addUserTotalListener(new AddUserTotalListener());
         adminView.addGroupTotalListener(new AddGroupTotalListener());
         adminView.addOpenUserViewListener(new AddOpenUserViewListener());
+        adminView.addTotalMessageListener(new AddTotalMessageListener());
         // need to get selected group
         TreeView tv = new TreeView();
         TreeModel tm = new TreeModel(adminModel.getMap());
@@ -97,6 +100,14 @@ public class AdminController {
             JOptionPane.showMessageDialog(null, "Total Group Count: " + adminModel.getTotalGroup());
         }       
     }
+    public class AddTotalMessageListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Total Message Count:" + adminModel.getTotalMessage());
+        }
+        
+    }
     public class AddOpenUserViewListener implements ActionListener {
 
         @Override
@@ -105,27 +116,37 @@ public class AdminController {
             if(selectedItem == null)
                 return;
             // need to find User class for a given selected item
-            UserModel user = null;
-            for(Map.Entry<UserGroup, UserGroup> entry : adminModel.getTree().entrySet()) {
-                if(entry.getKey().getID().equals("root")) {
-                    if(entry.getKey().getUserList() != null)
-                        for(String s : entry.getKey().getUserList()) 
-                            if(s.equals(selectedItem))
-                                user = new UserModel(selectedItem);
-                }
-                if(entry.getValue() != null) {
-                    if(entry.getValue().getUserList() != null)
-                        for(String s : entry.getValue().getUserList())
-                            if(s.equals(selectedItem))
-                                user = new UserModel(selectedItem);
+            // need to make sure another instance isnt in there
+            UserModel user = findUserClass(selectedItem, adminModel.getUserList());
+            // need to create new instance
+            if(user == null) {
+                for(Map.Entry<UserGroup, UserGroup> entry : adminModel.getTree().entrySet()) {
+                    if(entry.getKey().getID().equals("root")) {
+                        if(entry.getKey().getUserList() != null)
+                            for(String s : entry.getKey().getUserList()) 
+                                if(s.equals(selectedItem))
+                                    user = new UserModel(selectedItem);
+                    }
+                    if(entry.getValue() != null) {
+                        if(entry.getValue().getUserList() != null)
+                            for(String s : entry.getValue().getUserList())
+                                if(s.equals(selectedItem))
+                                    user = new UserModel(selectedItem);
+                    }
                 }
             }
             UserController uc;
             if(user != null) {
-                uc = new UserController(user, adminModel.getTree());
-                // go through all 
+                uc = new UserController(user, adminModel.getTree(), adminModel.getUserList());
             }
         }  
+    }
+    public UserModel findUserClass(String id, List<UserModel> list) {
+        for(UserModel u : list) {
+            if(id.equals(u.getID()) )
+                return u;
+        }
+        return null;
     }
 }
     

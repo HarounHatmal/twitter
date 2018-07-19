@@ -2,6 +2,7 @@
 package Main;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.*;
 
 public class UserView extends JFrame {
@@ -50,6 +51,16 @@ public class UserView extends JFrame {
         this.add(tweetList);
         this.setVisible(true);
     }
+    public void clearTweetList() {
+        tweetListModel.removeAllElements();
+    }
+    public void setTweetList(List<String> tweets ) {
+        if(tweetListModel == null)
+            tweetListModel = new DefaultListModel();
+        for(String s : tweets)
+            tweetListModel.addElement(s);
+        tweetList.setModel(tweetListModel);
+    }
     public String getUserID() {
         return userIDTextBox.getText();
     }
@@ -60,7 +71,7 @@ public class UserView extends JFrame {
         followUserButton.addActionListener(addFollow);
     }
     public void addTweetListener(ActionListener addTweet) {
-        
+        tweetButton.addActionListener(addTweet);
     }
     public JList getFollowingList() {
         return followingList;

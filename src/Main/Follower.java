@@ -14,22 +14,26 @@ import java.util.TreeMap;
  * @author harou
  */
 public class Follower implements Observer {
+    private UserModel userFollower;
     private String userID;
-    private List<String> newsFeed;
     
-    
-    public Follower(String ID, Subject s) {
-        userID = ID;
+    public Follower(UserModel user, String id) {
+        userFollower = user;
+        id = user.getID();
+    }
+    public Follower(UserModel user, Subject s) {
+        userFollower = user;
+        userID = user.getID();
         s.register(this);
     }
     public String getID() {
         return userID;
     }
+    public UserModel getUserFollower() {
+        return userFollower;
+    }
     @Override
     public void update(String tweet) {
-        if(newsFeed == null)
-            newsFeed = new ArrayList();
-        newsFeed.add(tweet);
-        // add newsfeed
+        userFollower.addNewsFeed(tweet);
     } 
 }

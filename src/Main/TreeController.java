@@ -37,7 +37,7 @@ public class TreeController {
                         treeView.addListItem(s);
             }
             if(entry.getValue().getID() != null) {
-                treeView.addListItem(" " + entry.getValue().getID());
+                treeView.addListItem("*" + entry.getValue().getID());
                 if(entry.getValue().getUserList() != null) {
                     for(String s : entry.getValue().getUserList())
                         treeView.addListItem(s);
@@ -53,7 +53,7 @@ public class TreeController {
         treeView.addListItem("root");
         for(Map.Entry<UserGroup, UserGroup> entry : treeModel.getTree().entrySet()) {
             //  add group and its users
-            treeView.addListItem(" " + entry.getValue().getID());
+            treeView.addListItem(entry.getValue().getID());
             if(entry.getValue().getUserList() != null) {
                 for(String s : entry.getValue().getUserList())
                     treeView.addListItem(s);
