@@ -9,9 +9,18 @@ public class UserModel implements Subject {
     private List<Observer> followerList;   // follower list
     private List<String> newsFeed;
     private static int tweetCount;
+    private long creationTime;
+    private long lastUpdateTime;
     
     public UserModel(String id) {
         uniqueID = id;
+        creationTime = System.currentTimeMillis();
+    }
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+    public long getCreationTime() {
+        return creationTime;
     }
     public List<String> getNewsFeed() {
         return newsFeed;
@@ -36,6 +45,7 @@ public class UserModel implements Subject {
             newsFeed = new ArrayList();
         newsFeed.add(tweet);
         tweetCount++;
+        lastUpdateTime = System.currentTimeMillis();
     }
     private void setNewsFeed(List<String> tweets) {
         newsFeed = tweets;

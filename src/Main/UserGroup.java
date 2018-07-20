@@ -11,9 +11,14 @@ import java.util.List;
 public class UserGroup implements Comparable<UserGroup> {
     private String uniqueID;
     private List<String> userList;
+    private long creationTime;
     
     public UserGroup(String id) {
         uniqueID = id;
+        creationTime = System.currentTimeMillis();
+    }
+    public long getCreationTime() {
+        return creationTime;
     }
     public String getID() {
         return uniqueID;

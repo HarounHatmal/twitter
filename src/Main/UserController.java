@@ -19,6 +19,7 @@ public class UserController {
         userModel = user;
         userView = new UserView();
         tree = adminModel;
+        userView.setCreationTimeLabel(userModel.getCreationTime());
         userView.addFollowListener(new AddFollowListener());
         userView.addTweetListener(new AddTweetListener());
         userList = users;
@@ -80,6 +81,7 @@ public class UserController {
                 if(uc.userModel == ((Follower)o).getUserFollower()) {
                     uc.userView.clearTweetList();
                     uc.userView.setTweetList(uc.userModel.getNewsFeed());
+                    uc.userView.setLastUpdateTimeLabel(uc.userModel.getLastUpdateTime());
                 }
             }
         }

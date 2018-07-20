@@ -17,6 +17,9 @@ public class AdminView extends JFrame {
    private JButton showGroupTotalButton;
    private JButton showMessageTotalButton;
    private JButton showPositivePercentageButton;
+   private JButton verifyUserButton;
+   private JButton findLastUserAddedButton;
+
     public AdminView() {
         super("Admin Menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +31,7 @@ public class AdminView extends JFrame {
         JPanel topPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         topPanel.setLayout(new GridLayout(3, 2));
-        bottomPanel.setLayout(new GridLayout(2, 2));
+        bottomPanel.setLayout(new GridLayout(3, 2));
         userIDTextBox = new JTextField(10);
         groupIDTextBox = new JTextField(10);
         userIDButton = new JButton("Add User");
@@ -38,6 +41,8 @@ public class AdminView extends JFrame {
         showGroupTotalButton = new JButton("Show Group Total");
         showMessageTotalButton = new JButton("Show Message Total");
         showPositivePercentageButton = new JButton("Show Positive Percentage");
+        verifyUserButton = new JButton("Validate User IDs");
+        findLastUserAddedButton = new JButton("Find Last User Added");
         topPanel.add(userIDTextBox);
         topPanel.add(userIDButton);
         topPanel.add(groupIDTextBox);
@@ -47,6 +52,8 @@ public class AdminView extends JFrame {
         bottomPanel.add(showGroupTotalButton);
         bottomPanel.add(showMessageTotalButton);
         bottomPanel.add(showPositivePercentageButton);
+        bottomPanel.add(verifyUserButton);
+        bottomPanel.add(findLastUserAddedButton);
         this.setLayout(new GridLayout(1,2));
         this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         inputPanel.add(topPanel);
@@ -86,6 +93,12 @@ public class AdminView extends JFrame {
         showGroupTotalButton.addActionListener(addGroupTotal);
     }
     public void addOpenUserViewListener(ActionListener addOpenUserView) {
-       userViewButton.addActionListener(addOpenUserView);
+        userViewButton.addActionListener(addOpenUserView);
+    }
+    public void addVerifyUserListener(ActionListener addVerifyUser) {
+        verifyUserButton.addActionListener(addVerifyUser);
+    }
+    public void addLastUserAddedListener(ActionListener addLastUserAdded) {
+        findLastUserAddedButton.addActionListener(addLastUserAdded);
     }
 }

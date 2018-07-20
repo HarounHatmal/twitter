@@ -7,6 +7,7 @@ package Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -25,6 +26,8 @@ public class AdminController {
         adminView.addGroupTotalListener(new AddGroupTotalListener());
         adminView.addOpenUserViewListener(new AddOpenUserViewListener());
         adminView.addTotalMessageListener(new AddTotalMessageListener());
+        adminView.addVerifyUserListener(new AddVerifyUserListener());
+        adminView.addLastUserAddedListener(new AddLastUserUpdatedListener());
         // need to get selected group
         TreeView tv = new TreeView();
         TreeModel tm = new TreeModel(adminModel.getMap());
@@ -140,6 +143,41 @@ public class AdminController {
                 uc = new UserController(user, adminModel.getTree(), adminModel.getUserList());
             }
         }  
+    }
+    public class AddVerifyUserListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(adminModel.getUserList() == null)
+                return;
+            
+            List<String> invalidUserIDList = new ArrayList();
+            for(UserModel userToCompare : adminModel.getUserList()) 
+                for(UserModel userBeingCompared : adminModel.getUserList())
+                    if(userToCompare != userBeingCompared 
+                            && userToCompare.getID().equals(userBeingCompared.getID()) 
+                            && !invalidUserIDList.contains(userBeingCompared.getID()))
+                        invalidUserIDList.add(userToCompare.getID());
+            if(invalidUserIDList.size() > 0) {
+                String messageString = "Invalid User IDs: ";
+                for(String s : invalidUserIDList)
+                    messageString += s + " ";
+                JOptionPane.showMessageDialog(null, messageString);
+            } 
+        }
+    }
+    public class AddLastUserUpdatedListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(adminModel.getUserList() == null)
+                return;
+            // find user with largest lastupdatetime 
+            UserModel lastUpdated = adminModel.getUserList().get(0);
+            for(UserModel u : adminModel.getUserList()) 
+                if(lastUpdated.getLastUpdateTime() < u.getLastUpdateTime())
+                    lastUpdated = u;
+            
+            JOptionPane.showMessageDialog(null, "Last User Updated: " + lastUpdated.getID());
+        }
+        
     }
     public UserModel findUserClass(String id, List<UserModel> list) {
         for(UserModel u : list) {

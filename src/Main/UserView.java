@@ -14,15 +14,19 @@ public class UserView extends JFrame {
     private JTextField tweetTextBox;
     private JButton followUserButton;
     private JButton tweetButton;
+    private JLabel creationTimeLabel;
+    private JLabel lastUpdateTimeLabel;
     
     public UserView() {
         super("User View");
         this.setSize(800, 500);
-        this.setLayout(new GridLayout(4, 1));
+        this.setLayout(new GridLayout(6, 1));
         JPanel topPanel = new JPanel();
         JPanel followingPanel = new JPanel();  //list
         JPanel newsFeedPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
+        JPanel creationTimePanel = new JPanel();
+        JPanel lastUpdateTimePanel = new JPanel();
         followingListModel = new DefaultListModel();
         followingList = new JList();
         followingList.setFixedCellHeight(50);
@@ -39,17 +43,29 @@ public class UserView extends JFrame {
         followUserButton = new JButton("Follow User");
         tweetTextBox = new JTextField();
         tweetButton = new JButton("Tweet Message");
+        creationTimeLabel = new JLabel();
+        lastUpdateTimeLabel = new JLabel();
         topPanel.add(userIDTextBox);
         topPanel.add(followUserButton);
         followingPanel.add(followingList);
         bottomPanel.add(tweetTextBox);
         bottomPanel.add(tweetButton);
         newsFeedPanel.add(tweetList);
+        creationTimePanel.add(creationTimeLabel);
+        lastUpdateTimePanel.add(lastUpdateTimeLabel);
         this.add(topPanel);
         this.add(followingList);
         this.add(bottomPanel);
         this.add(tweetList);
+        this.add(creationTimePanel);
+        this.add(lastUpdateTimePanel);
         this.setVisible(true);
+    }
+    public void setCreationTimeLabel(long time) {
+        creationTimeLabel.setText("Time Created: " + time);
+    }
+    public void setLastUpdateTimeLabel(long time) {
+        lastUpdateTimeLabel.setText("Last Updated Time: " + time);
     }
     public void clearTweetList() {
         tweetListModel.removeAllElements();
